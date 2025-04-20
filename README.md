@@ -1,10 +1,19 @@
 # WhatsApp to NotebookLM Converter
 
+**Quick Steps:**
+
+1.  Export chat from WhatsApp (`.txt` file).
+2.  Clone this repository.
+3.  Set up a Python virtual environment.
+4.  Install dependencies (`pip install -r requirements.txt`).
+5.  Run `python main.py path/to/_chat.txt "Conversation Name"`.
+6.  Upload the generated Markdown files from the `output` folder to NotebookLM.
+
 This script parses a WhatsApp chat export file (.txt) and converts it into multiple Markdown files, grouped by day, week, or month. These files are formatted for easy import into [Google NotebookLM](https://notebooklm.google.com/) as sources, allowing you to query and analyze your conversation history.
 
 ## Features
 
-- Parses standard WhatsApp text exports.
+- Parses standard WhatsApp text exports (detects `DD/MM/YY` vs `MM/DD/YY` automatically).
 - Handles multi-line messages.
 - Replaces `<Media omitted>` messages with `[[MEDIA FILE]]` placeholder.
 - Groups messages into separate Markdown files by Day, Week (starting Monday), or Month.
@@ -13,34 +22,44 @@ This script parses a WhatsApp chat export file (.txt) and converts it into multi
 
 ## Setup
 
-1.  **Clone the Repository:**
+**1. Export Your WhatsApp Chat:**
 
-    ```bash
-    git clone https://github.com/ArthurVerrez/whatsapp-to-notebooklm
-    cd whatsapp-to-notebooklm
-    ```
+- Open the WhatsApp chat you want to export.
+- Tap the contact or group name at the top.
+- Scroll down and select **Export Chat**.
+- Choose **Without Media** (the script currently ignores media files).
+- Select how you want to save or send the exported `.zip` file (e.g., save to Files, email to yourself).
+- **Unzip the exported file.** Inside the unzipped folder, you will find a `_chat.txt` (or similar named `.txt`) file. This is the file you will use with the script.
 
-2.  **Create and Activate Virtual Environment:**
+**2. Clone the Repository:**
 
-    - **macOS/Linux:**
-      ```bash
-      python3 -m venv venv
-      source venv/bin/activate
-      ```
-    - **Windows:**
-      ```bash
-      python -m venv venv
-      .\venv\Scripts\activate
-      ```
+```bash
+git clone https://github.com/ArthurVerrez/whatsapp-to-notebooklm
+cd whatsapp-to-notebooklm
+```
 
-3.  **Install Dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+**3. Create and Activate Virtual Environment:**
+
+- **macOS/Linux:**
+  ```bash
+  python3 -m venv venv
+  source venv/bin/activate
+  ```
+- **Windows:**
+  ```bash
+  python -m venv venv
+  .\venv\Scripts\activate
+  ```
+
+**4. Install Dependencies:**
+
+```bash
+pip install -r requirements.txt
+```
 
 ## Usage
 
-Run the script from your terminal using the `main.py` file. You need to provide the path to your WhatsApp export file and a name for the conversation.
+Run the script from your terminal using the `main.py` file. You need to provide the path to your WhatsApp export file (`_chat.txt`) and a name for the conversation.
 
 **Basic Command Structure:**
 
@@ -50,7 +69,7 @@ python main.py <path_to_whatsapp_export.txt> "<Conversation Name>" [options]
 
 **Arguments:**
 
-- `<path_to_whatsapp_export.txt>`: (Required) The path to the `.txt` file you exported from WhatsApp.
+- `<path_to_whatsapp_export.txt>`: (Required) The path to the `_chat.txt` file you extracted from the WhatsApp export.
 - `"<Conversation Name>"`: (Required) A descriptive name for the chat (e.g., "Project Group Chat", "Family Chat"). Enclose in quotes if it contains spaces.
 
 **Options:**
@@ -61,10 +80,10 @@ python main.py <path_to_whatsapp_export.txt> "<Conversation Name>" [options]
 
 **Example:**
 
-To process a file named `conversation.txt` and call the conversation "Conversation with a friend", saving the output to the default `output` folder and using automatic time grouping:
+To process a file named `_chat.txt` located in the current directory and call the conversation "Conversation with a friend", saving the output to the default `output` folder and using automatic time grouping:
 
 ```bash
-python main.py conversation.txt "Conversation with a friend"
+python main.py _chat.txt "Conversation with a friend"
 ```
 
 This will create Markdown files (e.g., `2023-10-26.md`, `2023-10-27_to_2023-11-02.md`, etc.) inside the `output` folder.
